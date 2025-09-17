@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For My Beautiful Girlfriend</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #ffe6f0, #ffccd9);
+      color: #b91c1c;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    h1, h2 {
+      margin: 0 0 0.5em 0;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 25px;
+      padding: 0.5em 1.5em;
+      font-weight: 600;
+      background-color: #dc2626;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #b91c1c;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 1em;
+      position: relative;
+      z-index: 10;
+    }
+    /* Hearts animation */
+    .hearts-container {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 5s ease-in forwards;
+      user-select: none;
+      opacity: 1;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 2em;
+    }
+    header h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #b91c1c;
+    }
+    header p {
+      font-size: 1.2em;
+      color: #991b1b;
+    }
+    /* Love message */
+    .love-message {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5em;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2);
+      margin-bottom: 2em;
+      text-align: center;
+    }
+    .love-message p {
+      font-size: 1.1em;
+      line-height: 1.5;
+      color: #7f1d1d;
+    }
+    .sweet-message {
+      margin-top: 1em;
+      font-style: italic;
+      color: #b91c1c;
+      font-weight: 600;
+      display: none;
+    }
+    /* Photo gallery */
+    .gallery {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2);
+      padding: 1em;
+      margin-bottom: 2em;
+      text-align: center;
+    }
+    .gallery img {
+      max-width: 100%;
+      border-radius: 15px;
+      height: 350px;
+      object-fit: cover;
+      box-shadow: 0 4px 8px rgba(185, 28, 28, 0.3);
+    }
+    .gallery-controls {
+      margin-top: 0.8em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1em;
+    }
+    .gallery-controls button {
+      font-size: 1.5em;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      padding: 0;
+      background-color: #dc2626;
+      border-radius: 50%;
+      color: white;
+      font-weight: 700;
+      user-select: none;
+    }
+    .gallery-controls span {
+      font-weight: 600;
+      color: #991b1b;
+      font-size: 1.1em;
+      min-width: 50px;
+      text-align: center;
+    }
+    /* Love meter */
+    .love-meter {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5em;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2);
+      margin-bottom: 2em;
+      text-align: center;
+    }
+    .meter-bar {
+      background: #fca5a5;
+      border-radius: 20px;
+      height: 20px;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 0.5em;
+    }
+    .meter-fill {
+      background: #b91c1c;
+      height: 100%;
+      width: 100%;
+      border-radius: 20px 0 0 20px;
+      transition: width 1s ease;
+    }
+    .meter-text {
+      font-weight: 700;
+      color: #7f1d1d;
+      font-size: 1.1em;
+    }
+    /* Music player */
+    .music-player {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5em;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2);
+      text-align: center;
+      margin-bottom: 3em;
+    }
+    .music-button {
+      font-size: 2em;
+      background-color: #dc2626;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .music-button:hover {
+      background-color: #b91c1c;
+    }
+    .music-status {
+      margin-top: 0.8em;
+      font-weight: 600;
+      color: #991b1b;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1em 0;
+      color: #b91c1c;
+      font-weight: 600;
+      font-size: 1em;
+      user-select: none;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .gallery img {
+        height: 250px;
+      }
+      header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-container"></div>
+
+  <div class="container">
+    <header>
+      <h1>For My Beautiful Girlfriend</h1>
+      <p>You mean the world to me</p>
+    </header>
+
+    <section class="love-message">
+      <p>
+        From the moment our paths crossed, my life gained colors I never knew existed.
+        Your laughter is my favorite melody, your smile my daily sunshine. This little
+        space is dedicated to expressing what words often fail to capture - the depth
+        of my love for you.
+      </p>
+      <button id="toggleMessageBtn">Reveal Sweet Message</button>
+      <p class="sweet-message" id="sweetMessage"></p>
+    </section>
+
+    <section class="gallery">
+      <h2>Our Memories</h2>
+      <img id="galleryImage" src="" alt="Romantic photo" />
+      <div class="gallery-controls">
+        <button id="prevPhotoBtn" aria-label="Previous photo">←</button>
+        <span id="photoCounter">1 / 3</span>
+        <button id="nextPhotoBtn" aria-label="Next photo">→</button>
+      </div>
+    </section>
+
+    <section class="love-meter">
+      <h2>How Much I Love You</h2>
+      <div class="meter-bar">
+        <div class="meter-fill" id="meterFill"></div>
+      </div>
+      <p class="meter-text">To Infinity and Beyond!</p>
+    </section>
+
+    <section class="music-player">
+      <h2>Our Song</h2>
+      <button id="musicBtn" class="music-button" aria-label="Play music">▶</button>
+      <p class="music-status" id="musicStatus">Click to play our song</p>
+      <audio id="audioPlayer" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" preload="auto"></audio>
+    </section>
+  </div>
+
+  <footer>
+    Made with ❤️ just for you
+  </footer>
+
+  <script>
+    // Floating hearts animation
+    const heartsContainer = document.querySelector('.hearts-container');
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 300);
+
+    // Love messages
+    const loveMessages = [
+      "Every moment with you is a blessing I cherish deeply.",
+      "Your smile is my favorite sight in the world.",
+      "I fall for you more every single day.",
+      "You are the most beautiful thing that ever happened to me."
+    ];
+
+    const toggleMessageBtn = document.getElementById('toggleMessageBtn');
+    const sweetMessage = document.getElementById('sweetMessage');
+    let messageVisible = false;
+
+    toggleMessageBtn.addEventListener('click', () => {
+      if (!messageVisible) {
+        const randomIndex = Math.floor(Math.random() * loveMessages.length);
+        sweetMessage.textContent = loveMessages[randomIndex];
+        sweetMessage.style.display = 'block';
+        toggleMessageBtn.textContent = 'Hide Sweet Message';
+      } else {
+        sweetMessage.style.display = 'none';
+        toggleMessageBtn.textContent = 'Reveal Sweet Message';
+      }
+      messageVisible = !messageVisible;
+    });
+
+    // Photo gallery
+    const photos = [
+      {
+        src: "cat.jpg",
+        alt: "Romantic couple silhouette at sunset on beach"
+      },
+      {
+        src: "pf.jpg",
+        alt: "Couple holding hands walking through field of flowers"
+      },
+      {
+        src: "pfp.jpg",
+        alt: "Couple sharing a romantic moment under stars"
+      }
+    ];
+
+    let currentPhotoIndex = 0;
+    const galleryImage = document.getElementById('galleryImage');
+    const photoCounter = document.getElementById('photoCounter');
+    const prevPhotoBtn = document.getElementById('prevPhotoBtn');
+    const nextPhotoBtn = document.getElementById('nextPhotoBtn');
+
+    function updateGallery() {
+      galleryImage.src = photos[currentPhotoIndex].src;
+      galleryImage.alt = photos[currentPhotoIndex].alt;
+      photoCounter.textContent = `${currentPhotoIndex + 1} / ${photos.length}`;
+    }
+
+    prevPhotoBtn.addEventListener('click', () => {
+      currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+      updateGallery();
+    });
+
+    nextPhotoBtn.addEventListener('click', () => {
+      currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+      updateGallery();
+    });
+
+    updateGallery();
+
+    // Music player
+    const musicBtn = document.getElementById('musicBtn');
+    const musicStatus = document.getElementById('musicStatus');
+    const audioPlayer = document.getElementById('audioPlayer');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audioPlayer.pause();
+        musicBtn.textContent = '▶';
+        musicStatus.textContent = 'Click to play our song';
+      } else {
+        audioPlayer.play();
+        musicBtn.textContent = '❚❚';
+        musicStatus.textContent = 'Playing: Our Favorite Song';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Pause music when audio ends
+    audioPlayer.addEventListener('ended', () => {
+      musicBtn.textContent = '▶';
+      musicStatus.textContent = 'Click to play our song';
+      isPlaying = false;
+    });
+  </script>
+</body>
+</html>
